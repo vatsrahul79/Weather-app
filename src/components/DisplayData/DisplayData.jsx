@@ -26,7 +26,6 @@ const useStyles = makeStyles({
 const DisplayData = (props) => {
     const classes = useStyles();
     const { data, loading } = props
-    console.log(data)
     const changeFormat = (dates) => {
         const date = dayjs(dates);
         const dated = dayjs(date).format("ddd");
@@ -36,9 +35,6 @@ const DisplayData = (props) => {
     if (loading) {
         return <div className="loader"></div>;
     }
-    const handleChange = (e) =>{
-        console.log(e.target);
-    }
 
     const iconUrl = (icon) => `http://openweathermap.org/img/wn/${icon}.png`
     return (
@@ -47,7 +43,7 @@ const DisplayData = (props) => {
                 {data ? data.daily.map((all, i) => {
                     return (
                         <div key={i} className="col d-flex card">
-                            <Card item xs={2} className={classes.root}  onClick={(e)=>handleChange(e)}>
+                            <Card item xs={2} className={classes.root}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
                                         {changeFormat(all.dt)}
