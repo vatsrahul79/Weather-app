@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import dayjs from "dayjs";
 import WeatherChart from '../Chart'
-
+import './DisplayData.css'
 dayjs.extend(advancedFormat)
 
 const useStyles = makeStyles({
@@ -26,15 +26,18 @@ const useStyles = makeStyles({
 const DisplayData = (props) => {
     const classes = useStyles();
     const { data, loading } = props
-
+    console.log(data)
     const changeFormat = (dates) => {
         const date = dayjs(dates);
         const dated = dayjs(date).format("ddd");
         return `${dated}`;
     };
 
-    if(loading){
+    if (loading) {
         return <div className="loader"></div>;
+    }
+    const handleChange = (e) =>{
+        console.log(e.target);
     }
 
     const iconUrl = (icon) => `http://openweathermap.org/img/wn/${icon}.png`
@@ -43,8 +46,8 @@ const DisplayData = (props) => {
             <div className="row">
                 {data ? data.daily.map((all, i) => {
                     return (
-                        <div key={i} className="col d-flex" >
-                            <Card item xs={2} className={classes.root}>
+                        <div key={i} className="col d-flex card">
+                            <Card item xs={2} className={classes.root}  onClick={(e)=>handleChange(e)}>
                                 <CardContent>
                                     <Typography variant="h5" component="h2">
                                         {changeFormat(all.dt)}
@@ -53,12 +56,9 @@ const DisplayData = (props) => {
                                         {Math.floor(all.temp.day - 273.15)}
                                         <sup>o</sup>C
                                     </Typography>
-                                    <Typography variant="body2" component="p">
-                                        {all.weather[0].main}
-                                    </Typography>
                                     <img src={iconUrl(all.weather[0].icon)} alt="weather" />
                                     <Typography variant="body2" component="p">
-                                        {all.weather[0].description}
+                                        {all.weather[0].main}
                                     </Typography>
                                 </CardContent>
                             </Card>
@@ -69,17 +69,6 @@ const DisplayData = (props) => {
             </div>
             <div className="mt-4">
                 <WeatherChart data={data} />
-                <div className="row mr-5">
-                    <div>
-                    <h4 className="col-4">Pressure</h4>
-                <p>{Math.floor(data.current.pressure)}</p>
-                    </div>
-                <div className="ml-5">
-                <h4 className="col-4">Humidity</h4>
-                <p>{Math.floor(data.current.humidity)}%</p>
-                </div>
-                </div>
-                
             </div>
         </div>
     )

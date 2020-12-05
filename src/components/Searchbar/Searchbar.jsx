@@ -17,7 +17,7 @@ const Searchbar = () => {
     }
   })
 
-  const Api_key = 'c609afff11a2dedc1d4d3770928b8fe0'
+  const Api_key = {"give your-api-key"}
   useEffect(() => {
     setLoading(true)
     if (location.coordinates.lng && location.coordinates.lat) {

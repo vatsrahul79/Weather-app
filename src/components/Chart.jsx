@@ -55,16 +55,16 @@ const Area = props => (
 
 class WeatherChart extends React.PureComponent {
   render() {
-    const { classes } = this.props;
+    const { classes,data } = this.props;
     return (
       <Paper>
         <Chart
-          data={this.props.data.hourly}
+          data={data.hourly}
           className={classes.chart}
         >
           <ArgumentScale factory={scalePoint} />
           <ArgumentAxis />
-          <ValueAxis />
+          {/* <ValueAxis /> */}
 
           <AreaSeries
             name="Weather Report"
@@ -76,6 +76,16 @@ class WeatherChart extends React.PureComponent {
           <Animation />
           <Legend position="bottom" rootComponent={Root} labelComponent={Label} />
         </Chart>
+        <div className="row mr-5">
+                    <div  className="col-6  bg-primary">
+                        <h4 className="">Pressure</h4>
+                        <p className=""><b>{Math.floor(data.current.pressure)}</b></p>
+                    </div>
+                    <div className="col-6 bg-primary">
+                        <h4 className="">Humidity</h4>
+                        <p><b>{Math.floor(data.current.humidity)}%</b></p>
+                    </div>
+                </div>
       </Paper>
     );
   }
